@@ -1,0 +1,16 @@
+numpy
+pandas
+sklearn
+seaborn
+tqdm
+matplotlib
+setuptools
+tensorboard
+tensorboard-data-server
+tensorboard-plugin-wit
+gym>=0.10.5
+networkx>=2.8.4
+torch>=1.7.1
+scipy>=1.8.1
+six>=1.16.0
+urllib3>=1.26.10
