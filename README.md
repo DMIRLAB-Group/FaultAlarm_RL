@@ -69,7 +69,9 @@ An example of training a standard PPO agent on the FaultAlarm environment:
 ```python
 python train_ppo.py --max_episodes 2000 --max_ep_len 100
 ```
-
+where
+- `--max_episodes`: Maximum number of training episodes.
+- `--max_ep_len`: Maximum length of each episode.
 
 ### CausalRL method
 
@@ -80,17 +82,20 @@ python train_c_ppo.py --subset_size 8 --random_g 0 --reg_parm 0.005
 ```
 Where:
 
-- subset_size: Specifies the size of the causal action subsets.
-- random_g: Determines whether to initialize the agent with a random causal graph.
-- reg_parm: A hyperparameter for causal pruning when learning causal structures.
+- `--subset_size`: Specifies the size of the causal action subsets.
+- `--random_g`: Determines whether to initialize the agent with a random causal graph (`1` for random, `0` for predefined).
+- `--reg_parm`: Regularization parameter for causal pruning during causal structure learning.
 
+## Code Structure
 
-Below is an overview of the main components related to causal reinforcement learning:
+The main components of the causal reinforcement learning framework are organized as follows:
+
 ```
 └── CausalReinforcementLearning
     ├── causal_learner.py
-    |   │   ├──THP: Used to learn initial causal structure
-    │   │   ├──CausalLearner: Used for online causal structure learning, including orientation and pruning stages.
+    │   ├── THP: Learns the initial causal structure.
+    │   ├── CausalLearner: Handles online causal structure learning, including orientation and pruning stages.
     ├── c_ppo.py
+    │   ├── Implements the Causal PPO algorithm.
 ```
 
