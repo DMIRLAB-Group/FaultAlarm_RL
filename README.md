@@ -3,22 +3,34 @@ Official code for paper [Learning by Doing: An Online Causal Reinforcement Learn
 
 ## Installations
 
-Make sure you have install Pytorch.
 
-Install requirements
+### Create Conda Environment
+
+```
+conda create -n faultAlarm_RL python=3.8
+source activate faultAlarm_RL
+pip install torch==1.7.1+cu110 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+### Install requirements
 
 ```commandline
+git clone https://github.com/DMIRLAB-Group/FaultAlarm_RL.git
+cd ./FaultAlarm_RL
 pip install -r requirements.txt
 ```
 
-Install Environment
+### Install FaultAlarm RL Environment
 
 ```commandline
+cd ./FaultAlarm_RL
 pip install -e .
 ```
+This will install the custom faultAlarm environment so it can be accessed via standard Python imports.
 
-
-## Usage for Reinforcement Learning
+## Usage
+Below is a simple example demonstrating how to interact with the faultAlarm environment via gym:
+### Usage for FaultAlarm RL Environment
 
 ```
 import gym
@@ -39,11 +51,46 @@ while True:
     if done:
          break
 ```
-## Examples 
-An example run of the CausalPPO algorithm on FaultAlarm environment is as follows.
+
+
+## Run 
+
+### Logging
+This codebase includes TensorBoard logging. To visualize training logs, run:
+```
+tensorboard --logdir=logs_tensorboard --port 6008
+```
+assuming you used the default log_dir.
+
+### RL method
+An example of training a standard PPO agent on the FaultAlarm environment:
+
 
 ```python
+python train_ppo.py --max_episodes 2000 --max_ep_len 100
+```
 
-python train_c_ppo.py
+
+### CausalRL method
+
+An example of training a Causal PPO agent on the FaultAlarm environment:
+
+```python
+python train_c_ppo.py --subset_size 8 --random_g 0 --reg_parm 0.005
+```
+Where:
+
+- subset_size: Specifies the size of the causal action subsets.
+- random_g: Determines whether to initialize the agent with a random causal graph.
+- reg_parm: A hyperparameter for causal pruning when learning causal structures.
+
+
+Below is an overview of the main components related to causal reinforcement learning:
+```
+└── CausalReinforcementLearning
+    ├── causal_learner.py
+    |   │   ├──THP: Used to learn initial causal structure
+    │   │   ├──CausalLearner: Used for online causal structure learning, including orientation and pruning stages.
+    ├── c_ppo.py
 ```
 
